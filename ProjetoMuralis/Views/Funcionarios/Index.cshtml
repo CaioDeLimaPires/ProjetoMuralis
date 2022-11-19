@@ -1,0 +1,92 @@
+﻿@model List<FuncionariosModel>
+@{
+    ViewData["Title"] = "Lista De Usuarios";
+}
+<div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-outline-primary" asp-controller="Funcionarios" asp-action="Criar" role="button">Adicionar novo Funcionario</a>
+    </div>
+
+    <br />
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    <br />
+
+    <h1 class="display-4">Listagem de Funcionarios</h1>
+
+    <table id="table-Funcionarios" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Login</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Perfil</th>
+                <th scope="col">Solicitações</th>
+                <th scope="col">Data de cadastro</th>
+                <th scope="col">Editar/Apagar</th>                
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var func in Model)
+                {
+                    <tr>
+                        <th scope="row">@func.Id_func</th>
+                        <td>@func.Nome_func</td>
+                        <td>@func.Login_fuc</td>
+                        <td>@func.Email_func</td>
+                        <td>@(func.Perfil_func == ProjetoMuralis.Enumerador.PerfilEnum.Admin ? "Adiministrador" : "Funcionario")</td>
+                        <td>
+                            <a href="javascript:" funcionario-id="@func.Id_func"class="btn btn-success btn-sm btn-total-produtos">
+                                @(func.Pedidos != null && func.Pedidos.Any() ? func.Pedidos.Count() : 0)
+                            </a>
+                        </td>
+                        <td>@func.DataCadastro_func</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" asp-action="Editar" asp-controller="Funcionarios" asp-route-id="@func.Id_func" class="btn btn-primary">Editar </a>
+                                <a role="button" asp-action="ApagarConfirmacao" asp-controller="Funcionarios" asp-route-id="@func.Id_func" class="btn btn-outline-danger">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="5">Nenhum funcionario encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+    <div id="modalPedidos" class="modal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Listagem de Produtos</h5>
+                    <button type="button" class="btn-close btn-sm" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>VOCÊ POSSUI PEDIDOS EM ABERTO</p>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+   
+</div>

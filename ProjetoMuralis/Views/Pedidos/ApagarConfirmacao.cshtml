@@ -1,0 +1,11 @@
+﻿@model PedidosModel
+@{
+    ViewData["Title"] = "Confirmação para deletar produto";
+}
+<div class="text-center">
+    <h3>Realmente deseja apagar os dados do produto(@Model.Nome_prod)?</h3>
+</div>
+<div class="d-grid gap-2">
+    <a class=" btn btn-danger " asp-action="Index" asp-controller="Pedidos" role="button">Cancelar operação</a>
+    <a class="d-grid gap-2 btn btn-primary" asp-action="Apagar" asp-controller="Pedidos" asp-route-id="@Model.Id_prod" role="button">Apagar</a>
+</div>

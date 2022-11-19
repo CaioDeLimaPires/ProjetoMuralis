@@ -1,0 +1,47 @@
+﻿@model List<PedidosModel>
+<div align="center">
+    <h1 class="display-4">Lista de pedidos</h1>
+    <table id="table-produtos-geral" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Valor unidade</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Data de cadastro</th>
+                <th scope="col">Editar/Dar Baixa</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var pedidos in Model)
+                {
+                    <tr>
+                        <th scope="row">@pedidos.Id_prod</th>
+                        <td>@pedidos.Nome_prod</td>
+                        <td>@pedidos.Descricao_prod</td>
+                        <td>@pedidos.Marca_prod</td>
+                        <td>@pedidos.Valor_prod</td>
+                        <td>@pedidos.Quantidade_prod</td>
+                        <td>@pedidos.DataCadastro_prod</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" asp-action="Editar" asp-controller="Pedidos" asp-route-id="@pedidos.Id_prod" class="btn btn-primary">Editar </a>
+                                <a role="button" asp-action="ApagarConfirmacao" asp-controller="Pedidos" asp-route-id="@pedidos.Id_prod" class="btn btn-outline-danger">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class="odd"><td valign="top" colspan="7">Nenhum funcionario encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

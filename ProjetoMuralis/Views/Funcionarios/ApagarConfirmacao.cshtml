@@ -1,0 +1,11 @@
+﻿@model FuncionariosModel
+@{
+    ViewData["Title"] = "Confirmação para deletar funcionario";
+}
+<div class="text-center">
+    <h3>Realmente deseja apagar os dados do funcionario(@Model.Nome_func)?</h3>
+</div>
+<div class="d-grid gap-2">
+    <a class=" btn btn-danger " asp-action="Index" asp-controller="Funcionarios" role="button">Cancelar operação</a>
+    <a class="d-grid gap-2 btn btn-primary" asp-action="Apagar" asp-controller="Funcionarios" asp-route-id="@Model.Id_func" role="button">Apagar</a>
+</div>

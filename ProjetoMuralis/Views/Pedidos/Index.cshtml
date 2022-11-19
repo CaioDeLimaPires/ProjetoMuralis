@@ -1,0 +1,77 @@
+﻿@model List<PedidosModel>
+@{
+    ViewData["Title"] = "Lista De Produtos";
+}
+<div>
+    <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-outline-primary" asp-controller="Pedidos" asp-action="Criar" role="button">Adicionar novo Produto</a>
+    </div>
+
+   @* <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+        <a class="btn btn-outline-primary" asp-controller="Funcionarios" asp-action="EnviarEmail" role="button">Solicitar Pedido</a>
+    </div>*@
+
+    <br />
+
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            <button type="button" class="btn btn-danger btn-sm close-alert" data-bs-dismiss="alert" aria-label="Close">X</button>
+            @TempData["MensagemErro"]
+        </div>
+    }
+
+    <br />
+
+    <h1 class="display-4">Listagem de Produtos</h1>
+
+    <table id="table-produtos" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nome</th>
+                <th scope="col">Descrição</th>
+                <th scope="col">Marca</th>
+                <th scope="col">Valor unidade</th>
+                <th scope="col">Quantidade</th>                
+                <th scope="col">Data de cadastro</th>
+                <th scope="col">Editar/Deletar</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Any())
+            {
+                foreach (var pedido in Model)
+                {
+                    <tr>
+                        <th scope="row">@pedido.Id_prod</th>
+                        <td>@pedido.Nome_prod</td>
+                        <td>@pedido.Descricao_prod</td>
+                        <td>@pedido.Marca_prod</td>
+                        <td>@pedido.Valor_prod</td>
+                        <td>@pedido.Quantidade_prod</td>
+                        <td>@pedido.DataCadastro_prod</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a role="button" asp-action="Editar" asp-controller="Pedidos" asp-route-id="@pedido.Id_prod" class="btn btn-primary">Editar </a>
+                                <a role="button" asp-action="ApagarConfirmacao" asp-controller="Pedidos" asp-route-id="@pedido.Id_prod" class="btn btn-outline-danger">Apagar</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr class=""><td valign="top" colspan="5">Nenhum produto encontrado</td></tr>
+            }
+        </tbody>
+    </table>
+</div>
